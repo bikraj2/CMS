@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'courses.apps.CoursesConfig',
     'students.apps.StudentsConfig',
+    'chat.apps.ChatConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,7 +43,8 @@ INSTALLED_APPS = [
     # Custom Apps
     'embed_video',
     'debug_toolbar',
-    'redisboard'
+    'redisboard',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
@@ -155,3 +157,8 @@ CACHE_MIDDLEWARE_SECONDS=60*15
 CACHE_MIDDLEWARE_KEY_PREFIX='educa'
 
 
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES' :[
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
