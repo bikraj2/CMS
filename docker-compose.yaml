@@ -1,0 +1,11 @@
+services:
+  web:
+    build: .  # Ensure there's a Dockerfile in the root directory
+    # command: python code/educa/manage.py runserver 0.0.0.0:8000
+    restart: unless-stopped
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    environment:
+      - DJANGO_SETTINGS_MODULE=educa.settings.prod

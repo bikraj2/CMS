@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -23,7 +23,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-7ys3yrhj0b4ql_%6+@iagkount!_j6a8&auwrvj+0#xw5d#aaj'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -31,6 +30,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+
+    'daphne',
     'courses.apps.CoursesConfig',
     'students.apps.StudentsConfig',
     'chat.apps.ChatConfig',
@@ -44,16 +45,16 @@ INSTALLED_APPS = [
     'embed_video',
     'debug_toolbar',
     'redisboard',
-    'rest_framework'
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.cache.UpdateCacheMiddleware',
+    # 'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.cache.FetchFromCacheMiddleware',
+    # 'django.middleware.cache.FetchFromCacheMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -84,12 +85,7 @@ WSGI_APPLICATION = 'educa.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+
 
 
 # Password validation
@@ -152,13 +148,27 @@ INTERNAL_IPS = [
     '127.0.0.1'
 ]
 
-CACHE_MIDDLEWARE_ALIAS= 'default'
-CACHE_MIDDLEWARE_SECONDS=60*15
-CACHE_MIDDLEWARE_KEY_PREFIX='educa'
-
+# CACHE_MIDDLEWARE_ALIAS= 'default'
+# CACHE_MIDDLEWARE_SECONDS=60*15
+# CACHE_MIDDLEWARE_KEY_PREFIX='educa'
+#
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES' :[
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
+}
+
+
+ASGI_APPLICATION = 'educa.asgi.application'
+
+
+
+CHANNEL_LAYERS =  {
+    'default': {
+        "BACKEND": 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('127.0.0.1',6379)] 
+        },
+    },
 }
