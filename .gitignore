@@ -2,3 +2,5 @@ static/
 media/
 db.sqlite3
 *.pyc
+data/
+ssl/
